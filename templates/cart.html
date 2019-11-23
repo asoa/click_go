@@ -1,0 +1,225 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}ClickGO{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ClickGO</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Menu</a></li>
+                <li><a href="/">Cart</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% block page_content %}
+        <!doctype html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <title>A simple, clean, and responsive HTML invoice template</title>
+
+            <style>
+            .invoice-box {
+                max-width: 800px;
+                margin: auto;
+                padding: 30px;
+                border: 1px solid #eee;
+                box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+                font-size: 16px;
+                line-height: 24px;
+                font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+                color: #555;
+            }
+
+            .invoice-box table {
+                width: 100%;
+                line-height: inherit;
+                text-align: left;
+            }
+
+            .invoice-box table td {
+                padding: 5px;
+                vertical-align: top;
+            }
+
+            .invoice-box table tr td:nth-child(2) {
+                text-align: right;
+            }
+
+            .invoice-box table tr.top table td {
+                padding-bottom: 20px;
+            }
+
+            .invoice-box table tr.top table td.title {
+                font-size: 45px;
+                line-height: 45px;
+                color: #333;
+            }
+
+            .invoice-box table tr.information table td {
+                padding-bottom: 40px;
+            }
+
+            .invoice-box table tr.heading td {
+                background: #eee;
+                border-bottom: 1px solid #ddd;
+                font-weight: bold;
+            }
+
+            .invoice-box table tr.details td {
+                padding-bottom: 20px;
+            }
+
+            .invoice-box table tr.item td{
+                border-bottom: 1px solid #eee;
+            }
+
+            .invoice-box table tr.item.last td {
+                border-bottom: none;
+            }
+
+            .invoice-box table tr.total td:nth-child(2) {
+                border-top: 2px solid #eee;
+                font-weight: bold;
+            }
+
+            @media only screen and (max-width: 600px) {
+                .invoice-box table tr.top table td {
+                    width: 100%;
+                    display: block;
+                    text-align: center;
+                }
+
+                .invoice-box table tr.information table td {
+                    width: 100%;
+                    display: block;
+                    text-align: center;
+                }
+            }
+
+            /** RTL **/
+            .rtl {
+                direction: rtl;
+                font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            }
+
+            .rtl table {
+                text-align: right;
+            }
+
+            .rtl table tr td:nth-child(2) {
+                text-align: left;
+            }
+            </style>
+        </head>
+
+        <body>
+            <div class="invoice-box">
+                <table cellpadding="0" cellspacing="0">
+                    <tr class="heading">
+                        <td>
+                            Item
+                        </td>
+
+                         <td>
+                            Quantity
+                        </td>
+
+                        <td>
+                            Price
+                        </td>
+                    </tr>
+
+                    <tr class="item">
+                        <td>
+                            Burger Total
+                        </td>
+
+                        <td>
+                            {{ session.get('burger_quantity') }}
+                        </td>
+
+                        <td>
+                            ${{ check.burger_total }}
+                        </td>
+                    </tr>
+
+                    <tr class="item">
+                        <td>
+                            Fries Total
+                        </td>
+
+                        <td>
+                            {{ session.get('fries_quantity') }}
+                        </td>
+
+                        <td>
+                            ${{ check.fries_total }}
+                        </td>
+                    </tr>
+
+                    <tr class="item">
+                        <td>
+                            Taxes
+                        </td>
+
+                        <td>
+
+                        </td>
+
+                        <td>
+                            ${{ check.tax }}
+                        </td>
+                    </tr>
+
+                    <tr class="total">
+                        <td>Total Amount Due</td>
+                        <td></td>
+                        <td>
+                            ${{ check.check }}
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                {{ wtf.quick_form(form) }}
+                <br>
+                {% if qrcode %}
+                    <img src="{{ qrcode }}">
+                {% endif %}
+            </div>
+        </body>
+        </html>
+
+    {% endblock %}
+</div>
+{% endblock %}
