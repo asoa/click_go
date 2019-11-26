@@ -6,4 +6,4 @@ aws dynamodb create-table \
       AttributeName=uid,AttributeType=S \
   --key-schema AttributeName=uid,KeyType=HASH \
   --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 \
-  --endpoint-url http://localhost:8000
+#  --endpoint-url http://localhost:8000
